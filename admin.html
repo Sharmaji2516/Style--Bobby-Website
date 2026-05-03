@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Style @ Bobby</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #f1f5f9; color: #1e293b; font-family: 'Inter', sans-serif; }
+        .admin-container { display: flex; min-height: 100vh; }
+        .admin-sidebar { width: 260px; background: #0f172a; color: #fff; padding: 30px 0; position: fixed; height: 100%; }
+        .admin-main { flex: 1; margin-left: 260px; padding: 40px; }
+        
+        .admin-nav-item { padding: 15px 30px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #94a3b8; font-weight: 500; transition: all 0.3s; }
+        .admin-nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .admin-nav-item.active { background: #1e293b; color: #fff; border-left: 4px solid #ff3f6c; }
+        
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .admin-card { background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; border: 1px solid #e2e8f0; }
+        
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 40px; }
+        .stat-box { background: #fff; padding: 25px; border-radius: 16px; border-left: 5px solid #ff3f6c; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .stat-box h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 10px; }
+        .stat-box .value { font-size: 32px; font-weight: 800; color: #0f172a; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 15px; border-bottom: 2px solid #f1f5f9; color: #64748b; font-size: 12px; text-transform: uppercase; }
+        td { padding: 20px 15px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+
+        .size-selector { display: flex; gap: 8px; flex-wrap: wrap; }
+        .size-checkbox { display: none; }
+        .size-label { padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .size-checkbox:checked + .size-label { background: #ff3f6c; color: #fff; border-color: #ff3f6c; }
+
+        .stock-toggle { display: flex; align-items: center; gap: 10px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e2e8f0; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #42b983; }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        .btn-primary { background: #ff3f6c; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-primary:hover { background: #e02050; transform: translateY(-2px); }
+
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #0f172a; color: #fff; padding: 15px 30px; border-radius: 8px; display: none; z-index: 3000; animation: slideIn 0.3s; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+        @media (max-width: 1024px) {
+            .admin-sidebar { display: none; }
+            .admin-main { margin-left: 0; padding: 20px; }
+            .stat-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div style="padding: 0 30px 40px; font-weight: 900; font-size: 22px; letter-spacing: 1px; color: #ff3f6c;">STYLE @ BOBBY</div>
+            <nav>
+                <a href="#" class="admin-nav-item active"><i class="fas fa-th-large"></i> Products</a>
+                <a href="#" class="admin-nav-item"><i class="fas fa-shopping-cart"></i> Recent Visits</a>
+                <a href="#" class="admin-nav-item"><i class="fas fa-users"></i> MVC Database</a>
+                <a href="#" class="admin-nav-item"><i class="fas fa-chart-bar"></i> Analytics</a>
+                <a href="index.html" class="admin-nav-item" style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1);"><i class="fas fa-external-link-alt"></i> View Storefront</a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <h1 style="font-size: 28px; font-weight: 800;">Inventory Dashboard</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Manage your stock and size availability in real-time.</p>
+                </div>
+                <button class="btn-primary" onclick="showToast('Upload feature active!')"><i class="fas fa-plus"></i> ADD PRODUCT</button>
+            </header>
+
+            <div class="stat-grid">
+                <div class="stat-box"><h3>Active Items</h3><div class="value">42</div></div>
+                <div class="stat-box" style="border-left-color: #42b983;"><h3>Items Sold</h3><div class="value">1.2K</div></div>
+                <div class="stat-box" style="border-left-color: #f59e0b;"><h3>Low Stock</h3><div class="value">5</div></div>
+            </div>
+
+            <div class="admin-card">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 25px;">Stock Management</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Stock Status</th>
+                            <th>Select Available Sizes</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Product 1 -->
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div style="width: 45px; height: 45px; background: #eee; border-radius: 8px;"></div>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 14px;">Navy Blue Kurta</div>
+                                        <div style="font-size: 12px; color: #64748b;">Bobby Exclusive</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stock-toggle">
+                                    <label class="switch"><input type="checkbox" checked onchange="showToast('Stock updated!')"><span class="slider"></span></label>
+                                    <span style="font-weight: 600; font-size: 12px;">IN STOCK</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="size-selector">
+                                    <input type="checkbox" id="n1_m" class="size-checkbox"><label for="n1_m" class="size-label">M</label>
+                                    <input type="checkbox" id="n1_l" class="size-checkbox" checked><label for="n1_l" class="size-label">L</label>
+                                    <input type="checkbox" id="n1_xl" class="size-checkbox" checked><label for="n1_xl" class="size-label">XL</label>
+                                    <input type="checkbox" id="n1_xxl" class="size-checkbox" checked><label for="n1_xxl" class="size-label">XXL</label>
+                                </div>
+                            </td>
+                            <td><button class="btn-primary" style="padding: 8px 15px; font-size: 12px;" onclick="showToast('Changes Saved!')">SAVE</button></td>
+                        </tr>
+                        <!-- Product 2 -->
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div style="width: 45px; height: 45px; background: #eee; border-radius: 8px;"></div>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 14px;">Slim Fit Jeans</div>
+                                        <div style="font-size: 12px; color: #64748b;">Bobby Denim</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stock-toggle">
+                                    <label class="switch"><input type="checkbox" onchange="showToast('Stock status updated!')"><span class="slider"></span></label>
+                                    <span style="font-weight: 600; font-size: 12px;">OUT OF STOCK</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="size-selector">
+                                    <input type="checkbox" id="j1_30" class="size-checkbox"><label for="j1_30" class="size-label">30</label>
+                                    <input type="checkbox" id="j1_32" class="size-checkbox"><label for="j1_32" class="size-label">32</label>
+                                    <input type="checkbox" id="j1_34" class="size-checkbox"><label for="j1_34" class="size-label">34</label>
+                                </div>
+                            </td>
+                            <td><button class="btn-primary" style="padding: 8px 15px; font-size: 12px;" onclick="showToast('Changes Saved!')">SAVE</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="admin-card">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 20px;">Add New Stock Image</h2>
+                <div style="border: 2px dashed #cbd5e1; border-radius: 12px; padding: 50px; text-align: center; color: #64748b; background: #f8fafc; cursor: pointer;" onclick="showToast('Image picker opened!')">
+                    <i class="fas fa-image" style="font-size: 40px; color: #cbd5e1; margin-bottom: 15px;"></i>
+                    <p style="font-weight: 600;">Click to upload product photo</p>
+                    <p style="font-size: 12px;">The website will update instantly.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast">Notification Message</div>
+
+    <script>
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+    </script>
+</body>
+</html>
