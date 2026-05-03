@@ -412,3 +412,120 @@ header {
         grid-template-columns: repeat(4, 1fr);
     }
 }
+
+/* Brand Footer Section */
+.brand-footer {
+    background-color: #000000; /* Jet Black */
+    color: #ffffff;
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+}
+
+.brand-footer .brand-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    padding: 12px 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0 auto 30px;
+}
+
+.brand-footer .logo-box {
+    background: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    overflow: hidden;
+}
+
+.brand-footer .logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.brand-footer .logo-box i {
+    color: #0ea5e9; /* Professional blue */
+    font-size: 26px;
+}
+
+.brand-footer .brand-text {
+    text-align: center;
+}
+
+.brand-footer .brand-text span {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    opacity: 0.6;
+    margin-bottom: 2px;
+}
+
+.brand-footer .brand-text h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.brand-footer .recognition-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+.brand-footer .recognition-list li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #10b981; /* Vibrant Emerald Green */
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.brand-footer .recognition-list li i {
+    font-size: 8px;
+}
+
+.brand-footer .divider {
+    border-top: 1.5px dashed rgba(255, 255, 255, 0.1);
+    margin: 30px 0;
+}
+
+.brand-footer .contact-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.brand-footer .contact-info i {
+    font-size: 24px;
+    opacity: 0.8;
+}
+
+.brand-footer .copyright {
+    text-align: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    opacity: 0.4;
+    line-height: 1.8;
+    font-weight: 700;
+}
